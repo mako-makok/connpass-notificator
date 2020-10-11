@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions';
 import { expressReceiver } from './slack/app'
-import { sendConnpassInfo } from './slack/webhook'
+import { sendConnpassInfoByWebhook } from './slack/webhook'
 
 export const helloWorld = functions.https.onRequest(async (request, response) => {
-  await sendConnpassInfo('Makoto', ['hoge', 'huga'])
+  await sendConnpassInfoByWebhook('Makoto', ['hoge', 'huga'])
   response.send('hello')
 })
 

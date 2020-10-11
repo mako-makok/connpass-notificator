@@ -1,7 +1,7 @@
 import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
-import { app } from './app'
+import fetch from 'node-fetch'
 
-export const sendConnpassInfo = async (slackId: string, messages: string[]) => {
+export const sendConnpassInfoByWebhook = async (slackId: string, messages: string[]) => {
   const startOfSectionBlock: SectionBlock = {
     type: 'section',
     text: {
@@ -35,17 +35,21 @@ export const sendConnpassInfo = async (slackId: string, messages: string[]) => {
     accessory: imageBlock
   }
   const blocks: KnownBlock[] = [startOfSectionBlock, ...messageBloks, dividerBlock, endOfSectionBlock]
-
+  
+  const body = {
+    channel: `@${slackId}`,
+    text: '本日の勉強会情報です :fox_face:',
+    blocks,
+    link_names: true
+  }
   try {
-    await app.client.chat.postMessage({
-      // token: 'xoxp-32027447937-32022457879-1433381550497-047c0cb6bd866867398cf36888dc2e92',
-      channel: `@${slackId}`,
-      text: '本日の勉強会情報です :fox_face:',
-      blocks: blocks,
-      link_names: true
-    }) 
+    await fetch('https://hooks.slack.com/services/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', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' }
+    })
   } catch(err) {
-    console.error(err.data.response_metadata.acceptedScopes)
+    console.error(err)
   }
 }
 
