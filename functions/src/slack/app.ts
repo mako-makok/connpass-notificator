@@ -1,11 +1,11 @@
-import * as functions from "firebase-functions"
-import { App, ExpressReceiver } from "@slack/bolt"
+import * as functions from 'firebase-functions'
+import { App, ExpressReceiver } from '@slack/bolt'
 
 const config = functions.config()
 
 export const expressReceiver = new ExpressReceiver({
   signingSecret: config.slack.secret,
-  endpoints: "/events",
+  endpoints: '/events',
   processBeforeResponse: true
 })
 export const app = new App({
@@ -15,5 +15,5 @@ export const app = new App({
 })
 app.command('/echo-from-firebase', async ({ command, ack, say }) => {
   ack();
-  say(`You said "${command.text}"`);
+  say(`You said '${command.text}'`);
 });
