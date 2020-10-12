@@ -1,5 +1,6 @@
 import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
 import fetch from 'node-fetch'
+import { config } from '../functions.setting'
 
 export const sendConnpassInfoByWebhook = async (slackId: string, messages: string[]) => {
   const startOfSectionBlock: SectionBlock = {
@@ -43,7 +44,8 @@ export const sendConnpassInfoByWebhook = async (slackId: string, messages: strin
     link_names: true
   }
   try {
-    await fetch('https://hooks.slack.com/services/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', {
+    const url: string = config.slack.webhook_url
+    await fetch(url, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }

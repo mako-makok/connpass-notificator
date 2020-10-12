@@ -1,7 +1,6 @@
-import * as functions from 'firebase-functions'
-import { App, ExpressReceiver } from '@slack/bolt'
 
-const config = functions.config()
+import { App, ExpressReceiver } from '@slack/bolt'
+import { config } from '../functions.setting'
 
 export const expressReceiver = new ExpressReceiver({
   signingSecret: config.slack.secret,
