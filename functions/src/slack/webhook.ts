@@ -1,6 +1,5 @@
 import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
-import { post } from '../repositories/http'
-import { config } from '../functions.setting'
+import { sendDM } from '../repositories/slack'
 
 export const sendConnpassInfoByWebhook = async (slackId: string, messages: string[]) => {
   const startOfSectionBlock: SectionBlock = {
@@ -36,15 +35,7 @@ export const sendConnpassInfoByWebhook = async (slackId: string, messages: strin
     accessory: imageBlock
   }
   const blocks: KnownBlock[] = [startOfSectionBlock, ...messageBloks, dividerBlock, endOfSectionBlock]
-  
-  const body = {
-    channel: `@${slackId}`,
-    text: '本日の勉強会情報です :fox_face:',
-    blocks,
-    link_names: true
-  }
-
-  post(config.slack.webhook_url, body)
+  sendDM(slackId, '本日の勉強会情報です :fox_face:', blocks)
 }
 
 // refs: https://pixabay.com/ja/images/search/%E5%8B%95%E7%89%A9/ 
