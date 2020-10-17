@@ -1,5 +1,5 @@
 import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
-import fetch from 'node-fetch'
+import { post } from '../repositories/http'
 import { config } from '../functions.setting'
 
 export const sendConnpassInfoByWebhook = async (slackId: string, messages: string[]) => {
@@ -43,16 +43,8 @@ export const sendConnpassInfoByWebhook = async (slackId: string, messages: strin
     blocks,
     link_names: true
   }
-  try {
-    const url: string = config.slack.webhook_url
-    await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' }
-    })
-  } catch(err) {
-    console.error(err)
-  }
+
+  post(config.slack.webhook_url, body)
 }
 
 // refs: https://pixabay.com/ja/images/search/%E5%8B%95%E7%89%A9/ 
