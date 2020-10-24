@@ -1,5 +1,5 @@
 import { KnownBlock } from '@slack/bolt'
-import { post } from '../repositories/http'
+import { post } from './http'
 import { config } from '../functions.setting'
 
 type SendDM = (slackId: string, text: string, blocks?: KnownBlock[]) => void

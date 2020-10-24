@@ -3,7 +3,6 @@ import fetch, { Response } from 'node-fetch'
 type Get = (url: string, params: any) => Promise<Response | null>
 type Post = (url: string, body: any) => Promise<Response | null>
 
-
 export const get: Get = async (url, params) => {
   const query = new URLSearchParams(params)
   try {
