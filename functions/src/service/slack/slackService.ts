@@ -13,10 +13,9 @@ export const sendConnpassInfoByWebhook = async () => {
   if (!users) return
 
   users.forEach(async (user) => {
-    // const datas: Event[][] = user.connpassParams.map(param => getConnpassData(param))
     const datas: Event[][] = await Promise.all(user.connpassParams.map(param => getConnpassData(param)))
     const events: Event[] = ([] as Event[]).concat(...datas)
-    const messages: string[] = events.map(event => createMessageItem(event))
+    const messages: string[] = [...new Set(events.map(event => createMessageItem(event)))]
     const blocks: KnownBlock[] = buildBlocks(messages)
     sendDM(user.slackId, '本日の勉強会情報です :fox_face:', blocks)
   })
