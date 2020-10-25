@@ -35,11 +35,14 @@ export interface Event {
   series: Series
 }
 
+export interface OriginalParam extends Param {
+  isOnline: boolean
+}
+
 export interface Param {
   keyword: string
   count: number
   order: Order
-  isOnline: boolean
 }
 export const Order = {
   DATE_OF_EVENT: 1,

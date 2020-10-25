@@ -1,6 +1,6 @@
 import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
 import { sendDM } from '../../repository/slack'
-import { Event } from '../../types/connpass'
+import { Event, OriginalParam } from '../../types/connpass'
 import { User } from '../../types/user'
 import { getUserByHasConnpass } from '../user/userService'
 import { getConnpassData } from '../../repository/connpass'
@@ -13,7 +13,9 @@ export const sendConnpassInfoByWebhook = async () => {
   if (!users) return
 
   users.forEach(async (user) => {
-    const datas: Event[][] = await Promise.all(user.connpassParams.map(param => getConnpassData(param)))
+    const datas: Event[][] = await Promise.all(
+      user.connpassParams.map((param: OriginalParam) => getConnpassData(param))
+    )
     const events: Event[] = ([] as Event[]).concat(...datas)
     const messages: string[] = [...new Set(events.map(event => createMessageItem(event)))]
     const blocks: KnownBlock[] = buildBlocks(messages)

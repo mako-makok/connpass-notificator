@@ -1,7 +1,7 @@
-import { Param } from "./connpass";
+import { OriginalParam } from "./connpass";
 
 export type User = {
   slackId: string
   hasConnpass: boolean
-  connpassParams: Param[]
+  connpassParams: OriginalParam[]
 }
