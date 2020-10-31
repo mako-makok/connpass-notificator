@@ -8,4 +8,4 @@ export const sendConnpassDataToSlack = functions.region(REGION).pubsub
   await sendConnpassInfoByWebhook()
 })
 
-export const slack = functions.https.onRequest(expressReceiver.app)
+export const slack = functions.region(REGION).https.onRequest(expressReceiver.app)
