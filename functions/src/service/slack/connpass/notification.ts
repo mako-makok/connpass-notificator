@@ -1,5 +1,5 @@
 import { KnownBlock, SectionBlock, ImageBlock } from '@slack/bolt'
-import { divider } from '../common/viws'
+import { divider } from '../common/views'
 import { Event, OriginalParam } from '../../../types/connpass'
 import { User } from '../../../types/user'
 import { getUserByHasConnpass } from '../../user/userService'
