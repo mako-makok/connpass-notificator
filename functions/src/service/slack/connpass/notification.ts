@@ -1,9 +1,10 @@
-import { KnownBlock, SectionBlock, DividerBlock, ImageBlock } from '@slack/bolt'
-import { sendDM } from '../../repository/slack'
-import { Event, OriginalParam } from '../../types/connpass'
-import { User } from '../../types/user'
-import { getUserByHasConnpass } from '../user/userService'
-import { getConnpassData } from '../../repository/connpass'
+import { KnownBlock, SectionBlock, ImageBlock } from '@slack/bolt'
+import { divider } from '../common/viws'
+import { Event, OriginalParam } from '../../../types/connpass'
+import { User } from '../../../types/user'
+import { getUserByHasConnpass } from '../../user/userService'
+import { getConnpassData } from '../../../repository/connpass'
+import { sendDM } from '../../../repository/slack'
 
 /**
  * connpassからイベントを取得してslackにwebhookを用いて投稿する.
@@ -67,9 +68,6 @@ function buildBlocks(messages: string[]): KnownBlock[] {
       }
     }
   })
-  const dividerBlock: DividerBlock = {
-    type: 'divider'
-  }
   const imageBlock: ImageBlock = {
     type: 'image',
     image_url: pickImageRandomly(),
@@ -83,5 +81,5 @@ function buildBlocks(messages: string[]): KnownBlock[] {
     },
     accessory: imageBlock
   }
-  return [startOfSectionBlock, ...messageBloks, dividerBlock, endOfSectionBlock] 
+  return [startOfSectionBlock, ...messageBloks, divider, endOfSectionBlock] 
 }

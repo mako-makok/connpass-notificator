@@ -1,6 +1,6 @@
-
 import { App, ExpressReceiver } from '@slack/bolt'
-import { config } from '../functions.setting'
+import { registerWord } from './service/slack/connpass/comands'
+import { config } from './functions.setting'
 
 export const expressReceiver = new ExpressReceiver({
   signingSecret: config.slack.secret,
@@ -13,3 +13,5 @@ export const app = new App({
   token: config.slack.token,
   processBeforeResponse: true
 })
+
+registerWord(app)
