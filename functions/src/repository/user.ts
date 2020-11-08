@@ -13,7 +13,7 @@ export const findByHasConnpass: FindByHasConnpass = async () => {
 type FindById = (id: string) => Promise<User | null>
 export const findById: FindById = async (id) => {
   const doc = await firestore.collection('users').doc(id).get()
-  
+
   const user = doc.exists ? doc.data() as User : null
   if (user) user.id = id
 

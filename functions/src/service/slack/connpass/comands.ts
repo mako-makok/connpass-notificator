@@ -14,7 +14,7 @@ type SlackUser = {
 export const registerWord = (app: App) => {
   app.command('/register-word', async ({ ack, body, context, command }) => {
     await ack()
-    
+
     try {
       await app.client.views.open({
         token: context.botToken,
@@ -52,7 +52,7 @@ export const registerWord = (app: App) => {
     const isOnline = values.isOnline.is_online_input.selected_option.value
     const param: RegistWord = {
       id: slackUser.id,
-      slackId: slackUser.name, 
+      slackId: slackUser.name,
       connpassParam: {
         keyword: keyword,
         count: count,
@@ -77,7 +77,7 @@ function buildBlocks(): KnownBlock[] {
       action_id: 'keyword_input',
     }
   }
-  
+
   const orderStaticSelect: StaticSelect = {
     type: 'static_select',
     action_id: 'order_input',
@@ -127,7 +127,7 @@ function buildBlocks(): KnownBlock[] {
           },
           value: `${i + 1}`
         }
-        return  option
+        return option
       })
     ]
   }

@@ -8,7 +8,7 @@ export const get: Get = async (url, params) => {
   try {
     const res: Response = await fetch(`${url}?${query}`)
     return res
-  } catch(err) {
+  } catch (err) {
     console.error(err)
     return null
   }
@@ -16,14 +16,14 @@ export const get: Get = async (url, params) => {
 
 export const post: Post = async (url, path, body) => {
   try {
-    
+
     const res = await fetch(url + path, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
     })
     return res
-  } catch(err) {
+  } catch (err) {
     console.error(err)
     return null
   }

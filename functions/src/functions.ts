@@ -10,9 +10,9 @@ import { OrderValueToLabel } from './service/slack/connpass/conpass.helpre'
 import { divider } from './service/slack/common/views'
 
 export const sendConnpassDataToSlack = functions.region(REGION).pubsub
-.schedule('55 8 * * *').timeZone('Asia/Tokyo').onRun(async context => {
-  await sendConnpassInfoByWebhook()
-})
+  .schedule('55 8 * * *').timeZone('Asia/Tokyo').onRun(async context => {
+    await sendConnpassInfoByWebhook()
+  })
 
 export const slack = functions.region(REGION).https.onRequest(expressReceiver.app)
 
@@ -20,7 +20,7 @@ export const registWord = functions.region(REGION).https.onRequest(async (req, r
   const param = req.body as RegistWord
   try {
     createOrAddWord(param.id, param.slackId, param.connpassParam)
-  } catch(e) {
+  } catch (e) {
     console.error(e)
   }
 

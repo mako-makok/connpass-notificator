@@ -33,12 +33,12 @@ function pickImageRandomly(): string {
     'https://pbs.twimg.com/profile_images/625633822235693056/lNGUneLX_400x400.jpg',
     'https://cdn.pixabay.com/photo/2017/01/14/12/59/iceland-1979445_960_720.jpg',
     'https://cdn.pixabay.com/photo/2016/12/05/11/39/fox-1883658_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2014/10/01/10/44/hedgehog-468228_960_720.jpg', 
-    'https://cdn.pixabay.com/photo/2017/06/09/09/39/adler-2386314_960_720.jpg', 
+    'https://cdn.pixabay.com/photo/2014/10/01/10/44/hedgehog-468228_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2017/06/09/09/39/adler-2386314_960_720.jpg',
     'https://cdn.pixabay.com/photo/2014/12/12/19/45/lion-565820_960_720.jpg'
 
   ]
-  return images[Math.round( Math.random () * images.length )]
+  return images[Math.round(Math.random() * images.length)]
 }
 
 /**
@@ -61,7 +61,7 @@ function buildBlocks(messages: string[]): KnownBlock[] {
   }
   const messageBloks: SectionBlock[] = messages.map(message => {
     return {
-      type: 'section', 
+      type: 'section',
       text: {
         type: 'mrkdwn',
         text: message
@@ -81,5 +81,5 @@ function buildBlocks(messages: string[]): KnownBlock[] {
     },
     accessory: imageBlock
   }
-  return [startOfSectionBlock, ...messageBloks, divider, endOfSectionBlock] 
+  return [startOfSectionBlock, ...messageBloks, divider, endOfSectionBlock]
 }
