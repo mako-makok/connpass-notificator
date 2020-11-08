@@ -3,8 +3,8 @@ import { divider } from '../common/views'
 import { Event, OriginalParam } from '../../../types/connpass'
 import { User } from '../../../types/user'
 import { getUserByHasConnpass } from '../../user/userService'
-import { getConnpassData } from '../../../repository/connpass'
-import { sendDM } from '../../../repository/slack'
+import { getConnpass } from '../../../client/connpass'
+import { sendDM } from '../../../client/slack'
 
 /**
  * connpassからイベントを取得してslackにwebhookを用いて投稿する.
@@ -15,7 +15,7 @@ export const sendConnpassInfoByWebhook = async () => {
 
   users.forEach(async (user) => {
     const datas: Event[][] = await Promise.all(
-      user.connpassParams.map((param: OriginalParam) => getConnpassData(param))
+      user.connpassParams.map((param: OriginalParam) => getConnpass(param))
     )
     const events: Event[] = ([] as Event[]).concat(...datas)
     const messages: string[] = [...new Set(events.map(event => createMessageItem(event)))]

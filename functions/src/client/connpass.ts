@@ -1,8 +1,8 @@
 import { get } from './http'
 import { Connpass, Event, OriginalParam, Param } from '../types/connpass'
 
-type GetConnpassData = (param: OriginalParam) => Promise<Event[]> 
-export const getConnpassData: GetConnpassData = async (param) => {
+type GetConnpass = (param: OriginalParam) => Promise<Event[]> 
+export const getConnpass: GetConnpass = async (param) => {
   const url = 'https://connpass.com/api/v1/event/'
   const res = await get(url, buildParam(param))
   if (!res) return []

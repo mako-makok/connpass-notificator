@@ -11,5 +11,5 @@ export const sendDM: SendDM = (slackId, text, blocks?) => {
     link_names: true
   }
 
-  post(config.slack.webhook_url, body)
+  post(config.slack.webhook_url, '', body)
 }
