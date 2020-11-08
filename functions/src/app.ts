@@ -1,5 +1,5 @@
 import { App, ExpressReceiver } from '@slack/bolt'
-import { registerWord } from './service/slack/connpass/comands'
+import { registerWord } from './service/slack/connpass/command/registerWord'
 import { config } from './functions.setting'
 
 export const expressReceiver = new ExpressReceiver({

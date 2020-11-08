@@ -1,8 +1,8 @@
 import { App, InputBlock, KnownBlock, Option, SectionBlock, StaticSelect } from '@slack/bolt'
-import { close, submit, divider } from '../common/views'
-import { Order } from '../../../types/connpass'
-import { postRegistUser } from '../../../client/functions'
-import { RegistWord } from '../../../types/params'
+import { close, submit, divider } from '../../common/views'
+import { Order } from '../../../../types/connpass'
+import { postRegistUser } from '../../../../client/functions'
+import { RegistWord } from '../../../../types/params'
 
 const VIEW_ID = 'dialog_1'
 
