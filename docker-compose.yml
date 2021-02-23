@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  firebase:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 4000:4000
+      - 5000:5000
+      - 5001:5001
+    working_dir: /opt/workspace
+    tty: true
