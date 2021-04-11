@@ -1,7 +1,7 @@
-import { OriginalParam } from "./connpass";
+import { ConnpassEventSearchQuery } from './connpass'
 
 export type RegistWord = {
   id: string
   slackId: string
-  connpassParam: OriginalParam
+  connpassParam: ConnpassEventSearchQuery
 }

@@ -16,11 +16,10 @@ export const get: Get = async (url, params) => {
 
 export const post: Post = async (url, path, body) => {
   try {
-
     const res = await fetch(url + path, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     })
     return res
   } catch (err) {

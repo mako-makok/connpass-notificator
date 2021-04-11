@@ -5,7 +5,7 @@ export interface Connpass {
   events: Event[]
 }
 
-export interface Series {
+interface Series {
   id: number
   title: string
   url: string
@@ -35,18 +35,16 @@ export interface Event {
   series: Series
 }
 
-export interface OriginalParam extends Param {
-  isOnline: boolean
-}
-
-export interface Param {
+export interface ConnpassEventSearchQuery {
   keyword: string
   count: number
   order: Order
+  isOnline: boolean
 }
+
 export const Order = {
   DATE_OF_EVENT: 1,
   LAST_UPDATE: 2,
-  NEW_ARRIVALS: 3
+  NEW_ARRIVALS: 3,
 } as const
 export type Order = typeof Order[keyof typeof Order]

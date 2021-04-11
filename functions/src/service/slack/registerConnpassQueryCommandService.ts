@@ -1,8 +1,14 @@
-import { App, InputBlock, KnownBlock, Option, SectionBlock, StaticSelect } from '@slack/bolt'
-import { close, submit, divider } from '../../common/views'
-import { Order } from '../../../../types/connpass'
-import { postRegistUser } from '../../../../client/functions'
-import { RegistWord } from '../../../../types/params'
+import {
+  App,
+  InputBlock,
+  KnownBlock,
+  Option,
+  SectionBlock,
+  StaticSelect,
+} from '@slack/bolt'
+import { close, submit, divider } from './views'
+import { Order } from '../../types/connpass'
+import { connpassQueryRepository } from '../../repository/connpassQueryRepository'
 
 const VIEW_ID = 'dialog_1'
 
@@ -11,7 +17,7 @@ type SlackUser = {
   name: string
 }
 
-export const registerWord = (app: App) => {
+export const register = (app: App) => {
   app.command('/register-word', async ({ ack, body, context, command }) => {
     await ack()
 
@@ -24,13 +30,13 @@ export const registerWord = (app: App) => {
           callback_id: VIEW_ID,
           title: {
             type: 'plain_text',
-            text: '検索ワードの登録'
+            text: '検索ワードの登録',
           },
           blocks: buildBlocks(),
           private_metadata: command.channel_id,
           close,
-          submit
-        }
+          submit,
+        },
       })
     } catch (err) {
       console.error(err)
@@ -38,29 +44,27 @@ export const registerWord = (app: App) => {
   })
 
   app.view(VIEW_ID, async ({ ack, view, context, body }) => {
-    await ack();
+    await ack()
 
     const data = await app.client.users.info({
       token: context.botToken,
-      user: body.user.id // 所謂uuidではなくメンションなどで使用されるもの
+      user: body.user.id, // 所謂uuidではなくメンションなどで使用されるもの
     })
     const slackUser = data.user as SlackUser
     const values = view.state.values
     const keyword = values.keyword.keyword_input.value
-    const order: Order = Number(values.order.order_input.selected_option.value) as Order
+    const order: Order = Number(
+      values.order.order_input.selected_option.value
+    ) as Order
     const count = values.count.count_input.selected_option.value
     const isOnline = values.isOnline.is_online_input.selected_option.value
-    const param: RegistWord = {
-      id: slackUser.id,
-      slackId: slackUser.name,
-      connpassParam: {
-        keyword: keyword,
-        count: count,
-        order: order,
-        isOnline: isOnline
-      }
-    }
-    postRegistUser(param)
+
+    connpassQueryRepository.add(slackUser.id, slackUser.name, {
+      keyword: keyword,
+      count: count,
+      order: order,
+      isOnline: isOnline,
+    })
   })
 }
 
@@ -70,12 +74,12 @@ function buildBlocks(): KnownBlock[] {
     block_id: 'keyword',
     label: {
       type: 'plain_text',
-      text: '検索ワード'
+      text: '検索ワード',
     },
     element: {
       type: 'plain_text_input',
       action_id: 'keyword_input',
-    }
+    },
   }
 
   const orderStaticSelect: StaticSelect = {
@@ -85,34 +89,34 @@ function buildBlocks(): KnownBlock[] {
       {
         text: {
           type: 'plain_text',
-          text: '開催日'
+          text: '開催日',
         },
-        value: `${Order.DATE_OF_EVENT}`
+        value: `${Order.DATE_OF_EVENT}`,
       },
       {
         text: {
           type: 'plain_text',
-          text: '更新順'
+          text: '更新順',
         },
-        value: `${Order.LAST_UPDATE}`
+        value: `${Order.LAST_UPDATE}`,
       },
       {
         text: {
           type: 'plain_text',
-          text: '新着順'
+          text: '新着順',
         },
-        value: `${Order.NEW_ARRIVALS}`
+        value: `${Order.NEW_ARRIVALS}`,
       },
-    ]
+    ],
   }
   const orderSection: SectionBlock = {
     type: 'section',
     block_id: 'order',
     text: {
       type: 'mrkdwn',
-      text: '検索結果の並べ替え順序'
+      text: '検索結果の並べ替え順序',
     },
-    accessory: orderStaticSelect
+    accessory: orderStaticSelect,
   }
 
   const countStaticSelect: StaticSelect = {
@@ -123,22 +127,22 @@ function buildBlocks(): KnownBlock[] {
         const option: Option = {
           text: {
             type: 'plain_text',
-            text: `${i + 1}`
+            text: `${i + 1}`,
           },
-          value: `${i + 1}`
+          value: `${i + 1}`,
         }
         return option
-      })
-    ]
+      }),
+    ],
   }
   const countSection: SectionBlock = {
     type: 'section',
     block_id: 'count',
     text: {
       type: 'mrkdwn',
-      text: '取得件数'
+      text: '取得件数',
     },
-    accessory: countStaticSelect
+    accessory: countStaticSelect,
   }
 
   const isOnlineStaticSelect: StaticSelect = {
@@ -150,25 +154,25 @@ function buildBlocks(): KnownBlock[] {
           type: 'plain_text',
           text: 'YES',
         },
-        value: 'YES'
+        value: 'YES',
       },
       {
         text: {
           type: 'plain_text',
           text: 'NO',
         },
-        value: 'NO'
-      }
-    ]
+        value: 'NO',
+      },
+    ],
   }
   const isOnlineSection: SectionBlock = {
     type: 'section',
     block_id: 'isOnline',
     text: {
       type: 'mrkdwn',
-      text: 'オンライン開催を優先する'
+      text: 'オンライン開催を優先する',
     },
-    accessory: isOnlineStaticSelect
+    accessory: isOnlineStaticSelect,
   }
 
   return [keywordInput, divider, orderSection, countSection, isOnlineSection]

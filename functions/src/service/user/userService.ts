@@ -1,4 +1,4 @@
-import { findByHasConnpass } from '../../repository/user'
+import { userRepository } from '../../repository/userRepository'
 import { User } from '../../types/user'
 
 /**
@@ -6,5 +6,5 @@ import { User } from '../../types/user'
  */
 type GetUserByHasConnpass = () => Promise<User[] | null>
 export const getUserByHasConnpass: GetUserByHasConnpass = () => {
-  return findByHasConnpass()
+  return userRepository.findByHasConnpass()
 }
