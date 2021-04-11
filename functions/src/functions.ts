@@ -6,7 +6,7 @@ import { createOrAddWord } from './service/slack/connpass/slackConnpassService'
 import { RegistWord } from './types/params'
 import { sendDM } from './client/slack'
 import { KnownBlock } from '@slack/bolt'
-import { OrderValueToLabel } from './service/slack/connpass/conpass.helpre'
+import { orderValueToLabel } from './service/slack/connpass/conpass.helper'
 import { divider } from './service/slack/common/views'
 
 export const sendConnpassDataToSlack = functions.region(REGION).pubsub
@@ -36,7 +36,7 @@ export const registWord = functions.region(REGION).https.onRequest(async (req, r
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `並び順: *${OrderValueToLabel(param.connpassParam.order)}*`
+        text: `並び順: *${orderValueToLabel(param.connpassParam.order)}*`
       }
     },
     {

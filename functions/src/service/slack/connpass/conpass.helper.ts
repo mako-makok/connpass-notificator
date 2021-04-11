@@ -1,6 +1,6 @@
 import { Order } from '../../../types/connpass'
 
-export function OrderValueToLabel(val: Order) {
+export function orderValueToLabel(val: Order) {
   switch (val) {
     case Order.DATE_OF_EVENT:
       return '開催日'
